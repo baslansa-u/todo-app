@@ -1,14 +1,30 @@
 part of 'todo_bloc.dart';
 
-class TodoState {}
+abstract class TodoState extends Equatable {
+  const TodoState();
 
-class TodoLoadingState extends TodoState {}
-
-class TodoLoadedState extends TodoState {
-  TodoLoadedState();
+  @override
+  List<Object?> get props => [];
 }
 
-class TodoErrorState extends TodoState {
-  TodoErrorState({required this.message});
+class TodoLoading extends TodoState {}
+
+class TodoLoaded extends TodoState {
+  final List<Todo> todos;
+
+  const TodoLoaded(this.todos);
+
+  @override
+  List<Object?> get props => [todos];
+}
+
+class TodoError extends TodoState {
   final String message;
+
+  const TodoError(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }
+
+class TodoInitial extends TodoState {}
