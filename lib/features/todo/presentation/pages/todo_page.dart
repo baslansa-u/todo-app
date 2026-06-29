@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:todo_app/features/todo/presentation/bloc/todo_bloc.dart';
+import 'package:todo_app/features/todo/presentation/widgets/edit_todo_dialog.dart';
 import 'package:todo_app/features/todo/presentation/widgets/todo_input.dart';
 
 class TodoPage extends StatefulWidget {
@@ -42,7 +43,6 @@ class _TodoPageState extends State<TodoPage> {
                     child: CircularProgressIndicator(),
                   );
                 }
-
                 if (state is TodoError) {
                   return Center(
                     child: Text(
@@ -50,22 +50,19 @@ class _TodoPageState extends State<TodoPage> {
                     ),
                   );
                 }
-
                 if (state is TodoLoaded) {
-                  if (state.todos.isEmpty) {
+                  if (state.filteredTodos.isEmpty) {
                     return const Center(
                       child: Text(
                         "No todo yet",
                       ),
                     );
                   }
-
                   final remaining = state.todos
                       .where(
                         (todo) => !todo.isCompleted,
                       )
                       .length;
-
                   return Column(
                     children: [
                       Padding(
@@ -74,12 +71,46 @@ class _TodoPageState extends State<TodoPage> {
                           "Total: ${state.todos.length} | Remaining: $remaining",
                         ),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              context.read<TodoBloc>().add(
+                                    ChangeTodoFilter(
+                                      TodoFilter.all,
+                                    ),
+                                  );
+                            },
+                            child: const Text("All"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              context.read<TodoBloc>().add(
+                                    ChangeTodoFilter(
+                                      TodoFilter.active,
+                                    ),
+                                  );
+                            },
+                            child: const Text("Active"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              context.read<TodoBloc>().add(
+                                    ChangeTodoFilter(
+                                      TodoFilter.completed,
+                                    ),
+                                  );
+                            },
+                            child: const Text("Completed"),
+                          ),
+                        ],
+                      ),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: state.todos.length,
+                          itemCount: state.filteredTodos.length,
                           itemBuilder: (_, index) {
-                            final todo = state.todos[index];
-
+                            final todo = state.filteredTodos[index];
                             return ListTile(
                               title: Text(
                                 todo.title,
@@ -104,17 +135,29 @@ class _TodoPageState extends State<TodoPage> {
                                       );
                                 },
                               ),
-                              trailing: IconButton(
-                                icon: const Icon(
-                                  Icons.delete,
-                                ),
-                                onPressed: () {
-                                  context.read<TodoBloc>().add(
-                                        DeleteTodoEvent(
-                                          todo.id,
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.edit),
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => EditTodoDialog(
+                                          todo: todo,
                                         ),
                                       );
-                                },
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () {
+                                      context.read<TodoBloc>().add(
+                                            DeleteTodoEvent(todo.id),
+                                          );
+                                    },
+                                  ),
+                                ],
                               ),
                             );
                           },
@@ -123,7 +166,6 @@ class _TodoPageState extends State<TodoPage> {
                     ],
                   );
                 }
-
                 return const SizedBox();
               },
             ),

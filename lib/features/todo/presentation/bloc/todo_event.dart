@@ -35,3 +35,17 @@ class DeleteTodoEvent extends TodoEvent {
   @override
   List<Object?> get props => [id];
 }
+
+class ChangeTodoFilter extends TodoEvent {
+  final TodoFilter filter;
+
+  const ChangeTodoFilter(
+    this.filter,
+  );
+}
+
+enum TodoFilter {
+  all,
+  active,
+  completed,
+}

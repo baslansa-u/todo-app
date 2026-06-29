@@ -25,6 +25,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     on<AddTodoEvent>(_onAddTodoEvent);
     on<UpdateTodoEvent>(_onUpdateTodoEvent);
     on<DeleteTodoEvent>(_onDeleteTodoEvent);
+    on<ChangeTodoFilter>(_onChangeFilter);
   }
 
   Future<void> _onLoadTodos(LoadTodos event, Emitter<TodoState> emit) async {
@@ -93,5 +94,18 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
         add(LoadTodos());
       },
     );
+  }
+
+  void _onChangeFilter(ChangeTodoFilter event, Emitter<TodoState> emit) {
+    if (state is TodoLoaded) {
+      final current = state as TodoLoaded;
+
+      emit(
+        TodoLoaded(
+          current.todos,
+          filter: event.filter,
+        ),
+      );
+    }
   }
 }
