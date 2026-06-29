@@ -17,7 +17,7 @@ Future<void> initDependencies() async {
   // hive
   final box = await Hive.openBox<TodoModel>('todos');
 
-  sl.registerLazySingleton<Box<TodoModel>>(
+  sl.registerLazySingleton<Box>(
     () => box,
   );
 
