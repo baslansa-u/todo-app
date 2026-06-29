@@ -1,6 +1,8 @@
 import 'package:hive/hive.dart';
 import 'package:todo_app/features/todo/domain/entity/todo.dart';
 
+part 'todo_model.g.dart';
+
 @HiveType(typeId: 0)
 class TodoModel {
   @HiveField(0)
