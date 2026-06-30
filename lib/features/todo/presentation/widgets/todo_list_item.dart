@@ -44,7 +44,12 @@ class TodoListItem extends StatelessWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (todo.description.isNotEmpty) Text(todo.description),
+                  if (todo.description.isNotEmpty)
+                    Text(
+                      todo.description,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   if (todo.dueDate != null)
                     Text(
                         "Due: ${DateFormat('dd MMM yyyy').format(todo.dueDate!)}"),

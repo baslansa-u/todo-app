@@ -5,6 +5,7 @@ import 'package:todo_app/features/todo/presentation/bloc/todo_bloc.dart';
 import 'package:todo_app/features/todo/presentation/widgets/add_todo_dialog.dart';
 import 'package:todo_app/features/todo/presentation/widgets/edit_todo_dialog.dart';
 import 'package:todo_app/features/todo/presentation/widgets/filter_tab_bar.dart';
+import 'package:todo_app/features/todo/presentation/widgets/search_bar.dart';
 import 'package:todo_app/features/todo/presentation/widgets/summary_card.dart';
 import 'package:todo_app/features/todo/presentation/widgets/todo_list_item.dart';
 
@@ -116,11 +117,23 @@ class _TodoPageState extends State<TodoPage> {
 
   // Filter tab bar
   Widget _buildFilter(BuildContext context, TodoLoaded state) {
-    return FilterTabBar(
-      selectedFilter: state.filter,
-      onChanged: (filter) {
-        context.read<TodoBloc>().add(ChangeTodoFilter(filter));
-      },
+    return Column(
+      children: [
+        FilterTabBar(
+          selectedFilter: state.filter,
+          onChanged: (filter) {
+            context.read<TodoBloc>().add(ChangeTodoFilter(filter));
+          },
+        ),
+        SearchBarWidget(
+          hintText: "Search task...",
+          onChanged: (query) {
+            context.read<TodoBloc>().add(
+                  SearchByTitle(query),
+                );
+          },
+        )
+      ],
     );
   }
 

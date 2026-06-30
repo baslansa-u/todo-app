@@ -57,9 +57,14 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
             controller: titleController,
             decoration: const InputDecoration(labelText: "Title"),
           ),
+          const SizedBox(height: 10),
           TextField(
             controller: descriptionController,
-            decoration: const InputDecoration(labelText: "Description"),
+            maxLines: 3,
+            decoration: const InputDecoration(
+              labelText: "Description",
+              alignLabelWithHint: true,
+            ),
           ),
           SizedBox(height: 10),
           DatePickerField(

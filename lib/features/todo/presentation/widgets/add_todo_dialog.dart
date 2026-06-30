@@ -74,10 +74,13 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
                 labelText: "Title",
               ),
             ),
+            const SizedBox(height: 10),
             TextField(
               controller: descriptionController,
+              maxLines: 3, // ← กล่องสูงขึ้น กด enter ได้
               decoration: const InputDecoration(
                 labelText: "Description",
+                alignLabelWithHint: true, // ← label ขึ้นบนแทนตรงกลาง
               ),
             ),
             const SizedBox(height: 10),

@@ -12,10 +12,12 @@ class TodoLoading extends TodoState {}
 class TodoLoaded extends TodoState {
   final List<Todo> todos;
   final TodoFilter filter;
+  final String searchQuery;
 
   const TodoLoaded(
     this.todos, {
     this.filter = TodoFilter.all,
+    this.searchQuery = '',
   });
 
   int get total => todos.length;
@@ -23,31 +25,38 @@ class TodoLoaded extends TodoState {
   int get done => todos.where((e) => e.isCompleted).length;
 
   List<Todo> get filteredTodos {
-    switch (filter) {
-      case TodoFilter.active:
-        return todos.where((e) => !e.isCompleted).toList();
+    var result = todos;
 
-      case TodoFilter.completed:
-        return todos.where((e) => e.isCompleted).toList();
+    result = switch (filter) {
+      TodoFilter.active => todos.where((e) => !e.isCompleted).toList(),
+      TodoFilter.completed => todos.where((e) => e.isCompleted).toList(),
+      TodoFilter.all => todos,
+    };
 
-      case TodoFilter.all:
-        return todos;
+    if (searchQuery.isNotEmpty) {
+      result = result
+          .where(
+              (e) => e.title.toLowerCase().contains(searchQuery.toLowerCase()))
+          .toList();
     }
+    return result;
   }
 
   // emit(current.copyWith(todos: updatedList))
   TodoLoaded copyWith({
     List<Todo>? todos,
     TodoFilter? filter,
+    String? searchQuery,
   }) {
     return TodoLoaded(
       todos ?? this.todos,
       filter: filter ?? this.filter,
+      searchQuery: searchQuery ?? this.searchQuery,
     );
   }
 
   @override
-  List<Object?> get props => [todos, filter];
+  List<Object?> get props => [todos, filter, searchQuery];
 }
 
 class TodoError extends TodoState {

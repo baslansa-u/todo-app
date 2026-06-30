@@ -47,6 +47,15 @@ class ChangeTodoFilter extends TodoEvent {
   List<Object?> get props => [filter];
 }
 
+class SearchByTitle extends TodoEvent {
+  final String title;
+
+  const SearchByTitle(this.title);
+
+  @override
+  List<Object?> get props => [title];
+}
+
 enum TodoFilter {
   all,
   active,

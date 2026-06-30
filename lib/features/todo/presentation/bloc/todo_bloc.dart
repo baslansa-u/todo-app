@@ -26,6 +26,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     on<UpdateTodoEvent>(_onUpdateTodoEvent);
     on<DeleteTodoEvent>(_onDeleteTodoEvent);
     on<ChangeTodoFilter>(_onChangeFilter);
+    on<SearchByTitle>(_onSearchByTitle);
   }
 
   Future<void> _onLoadTodos(LoadTodos event, Emitter<TodoState> emit) async {
@@ -111,6 +112,14 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       final current = state as TodoLoaded;
 
       emit(current.copyWith(filter: event.filter));
+    }
+  }
+
+  void _onSearchByTitle(SearchByTitle event, Emitter<TodoState> emit) {
+    if (state is TodoLoaded) {
+      final current = state as TodoLoaded;
+
+      emit(current.copyWith(searchQuery: event.title));
     }
   }
 }
