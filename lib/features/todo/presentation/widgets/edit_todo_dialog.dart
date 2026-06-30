@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/features/todo/presentation/widgets/date_picker_field.dart';
 
 import '../../domain/entity/todo.dart';
 import '../bloc/todo_bloc.dart';
@@ -20,6 +21,8 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
   late TextEditingController titleController;
   late TextEditingController descriptionController;
 
+  DateTime? selectedDueDate;
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +34,8 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
     descriptionController = TextEditingController(
       text: widget.todo.description,
     );
+
+    selectedDueDate = widget.todo.dueDate;
   }
 
   @override
@@ -50,9 +55,16 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
         children: [
           TextField(
             controller: titleController,
+            decoration: const InputDecoration(labelText: "Title"),
           ),
           TextField(
             controller: descriptionController,
+            decoration: const InputDecoration(labelText: "Description"),
+          ),
+          SizedBox(height: 10),
+          DatePickerField(
+            selectedDate: selectedDueDate,
+            onChanged: (date) => setState(() => selectedDueDate = date),
           ),
         ],
       ),
@@ -65,11 +77,13 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
         ),
         ElevatedButton(
           onPressed: () {
+            if (titleController.text.trim().isEmpty) return;
             context.read<TodoBloc>().add(
                   UpdateTodoEvent(
                     widget.todo.copyWith(
                       title: titleController.text,
                       description: descriptionController.text,
+                      dueDate: selectedDueDate, // ← เพิ่มตรงนี้
                     ),
                   ),
                 );
