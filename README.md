@@ -1,6 +1,8 @@
 # Todo App
 
 A Flutter Todo List application built as a technical assessment.
+-----
+<img src="Screenshot_1782787094.png" width="180"/>
 
 ## Features
 - Add, edit, delete tasks
