@@ -9,8 +9,11 @@ import 'package:todo_app/features/todo/presentation/widgets/summary_card.dart';
 import 'package:todo_app/features/todo/presentation/widgets/todo_list_item.dart';
 
 class TodoPage extends StatefulWidget {
+  final VoidCallback onToggleTheme;
+
   const TodoPage({
     super.key,
+    required this.onToggleTheme,
   });
 
   @override
@@ -46,12 +49,11 @@ class _TodoPageState extends State<TodoPage> {
   // AppBar
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      title: const Text("Todo"),
+      title: const Text("Todo App"),
+      elevation: 1,
       actions: [
         IconButton(
-          onPressed: () {
-            // TODO: toggle dark mode
-          },
+          onPressed: widget.onToggleTheme,
           icon: const Icon(Icons.dark_mode_outlined),
         ),
       ],
