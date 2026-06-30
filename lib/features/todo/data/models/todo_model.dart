@@ -15,6 +15,8 @@ class TodoModel {
   final bool isCompleted;
   @HiveField(4)
   final DateTime createdAt;
+  @HiveField(5)
+  final DateTime? dueDate;
 
   TodoModel({
     required this.id,
@@ -22,6 +24,7 @@ class TodoModel {
     required this.description,
     this.isCompleted = false,
     required this.createdAt,
+    this.dueDate,
   });
 
   Todo toEntity() => Todo(
@@ -30,6 +33,7 @@ class TodoModel {
         description: description,
         createdAt: createdAt,
         isCompleted: isCompleted,
+        dueDate: dueDate,
       );
 
   factory TodoModel.fromEntity(Todo todo) {
@@ -39,6 +43,7 @@ class TodoModel {
       description: todo.description,
       isCompleted: todo.isCompleted,
       createdAt: todo.createdAt,
+      dueDate: todo.dueDate,
     );
   }
 }

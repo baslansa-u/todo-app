@@ -42,6 +42,9 @@ class ChangeTodoFilter extends TodoEvent {
   const ChangeTodoFilter(
     this.filter,
   );
+
+  @override
+  List<Object?> get props => [filter];
 }
 
 enum TodoFilter {

@@ -18,6 +18,10 @@ class TodoLoaded extends TodoState {
     this.filter = TodoFilter.all,
   });
 
+  int get total => todos.length;
+  int get remaining => todos.where((e) => !e.isCompleted).length;
+  int get done => todos.where((e) => e.isCompleted).length;
+
   List<Todo> get filteredTodos {
     switch (filter) {
       case TodoFilter.active:
@@ -29,6 +33,17 @@ class TodoLoaded extends TodoState {
       case TodoFilter.all:
         return todos;
     }
+  }
+
+  // emit(current.copyWith(todos: updatedList))
+  TodoLoaded copyWith({
+    List<Todo>? todos,
+    TodoFilter? filter,
+  }) {
+    return TodoLoaded(
+      todos ?? this.todos,
+      filter: filter ?? this.filter,
+    );
   }
 
   @override
@@ -43,5 +58,3 @@ class TodoError extends TodoState {
   @override
   List<Object?> get props => [message];
 }
-
-class TodoInitial extends TodoState {}

@@ -20,7 +20,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     this.deleteTodoUsecase,
     this.getTodosUsecase,
     this.updateTodoUsecase,
-  ) : super(TodoInitial()) {
+  ) : super(TodoLoading()) {
     on<LoadTodos>(_onLoadTodos);
     on<AddTodoEvent>(_onAddTodoEvent);
     on<UpdateTodoEvent>(_onUpdateTodoEvent);
@@ -39,7 +39,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   Future<void> _onAddTodoEvent(
       AddTodoEvent event, Emitter<TodoState> emit) async {
-    emit(TodoLoading());
+    if (state is! TodoLoaded) return;
+    final current = state as TodoLoaded;
 
     final result = await addTodoUsecase(
       AddTodoParams(
@@ -47,14 +48,18 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       ),
     );
 
-    result.fold((failure) => emit(TodoError(failure.message)), (_) {
-      add(LoadTodos());
-    });
+    result.fold(
+      (failure) => emit(TodoError(failure.message)),
+      (_) => emit(current.copyWith(
+        todos: [event.todo, ...current.todos],
+      )),
+    );
   }
 
   Future<void> _onUpdateTodoEvent(
       UpdateTodoEvent event, Emitter<TodoState> emit) async {
-    emit(TodoLoading());
+    if (state is! TodoLoaded) return;
+    final current = state as TodoLoaded;
 
     final result = await updateTodoUsecase(
       UpdateTodoParams(
@@ -68,15 +73,19 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
           failure.message,
         ),
       ),
-      (_) {
-        add(LoadTodos());
-      },
+      (_) => emit(
+        current.copyWith(
+            todos: current.todos
+                .map((t) => t.id == event.todo.id ? event.todo : t)
+                .toList()),
+      ),
     );
   }
 
   Future<void> _onDeleteTodoEvent(
       DeleteTodoEvent event, Emitter<TodoState> emit) async {
-    emit(TodoLoading());
+    if (state is! TodoLoaded) return;
+    final current = state as TodoLoaded;
 
     final result = await deleteTodoUsecase(
       DeleteTodoParams(
@@ -90,9 +99,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
           failure.message,
         ),
       ),
-      (_) {
-        add(LoadTodos());
-      },
+      (_) => emit(
+        current.copyWith(
+            todos: current.todos.where((t) => t.id != event.id).toList()),
+      ),
     );
   }
 
@@ -100,12 +110,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     if (state is TodoLoaded) {
       final current = state as TodoLoaded;
 
-      emit(
-        TodoLoaded(
-          current.todos,
-          filter: event.filter,
-        ),
-      );
+      emit(current.copyWith(filter: event.filter));
     }
   }
 }
