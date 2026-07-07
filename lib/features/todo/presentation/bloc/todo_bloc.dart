@@ -40,70 +40,88 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   Future<void> _onAddTodoEvent(
       AddTodoEvent event, Emitter<TodoState> emit) async {
-    if (state is! TodoLoaded) return;
-    final current = state as TodoLoaded;
-
     final result = await addTodoUsecase(
       AddTodoParams(
         todo: event.todo,
       ),
     );
 
-    result.fold(
-      (failure) => emit(TodoError(failure.message)),
-      (_) => emit(current.copyWith(
-        todos: [event.todo, ...current.todos],
-      )),
+    await result.fold(
+      (failure) async => emit(TodoError(failure.message)),
+      (_) async {
+        final current = _loadedStateOrNull();
+
+        if (current == null) {
+          await _reloadTodos(emit);
+          return;
+        }
+
+        emit(current.copyWith(
+          todos: [event.todo, ...current.todos],
+        ));
+      },
     );
   }
 
   Future<void> _onUpdateTodoEvent(
       UpdateTodoEvent event, Emitter<TodoState> emit) async {
-    if (state is! TodoLoaded) return;
-    final current = state as TodoLoaded;
-
     final result = await updateTodoUsecase(
       UpdateTodoParams(
         todo: event.todo,
       ),
     );
 
-    result.fold(
-      (failure) => emit(
+    await result.fold(
+      (failure) async => emit(
         TodoError(
           failure.message,
         ),
       ),
-      (_) => emit(
-        current.copyWith(
-            todos: current.todos
-                .map((t) => t.id == event.todo.id ? event.todo : t)
-                .toList()),
-      ),
+      (_) async {
+        final current = _loadedStateOrNull();
+
+        if (current == null) {
+          await _reloadTodos(emit);
+          return;
+        }
+
+        emit(
+          current.copyWith(
+              todos: current.todos
+                  .map((t) => t.id == event.todo.id ? event.todo : t)
+                  .toList()),
+        );
+      },
     );
   }
 
   Future<void> _onDeleteTodoEvent(
       DeleteTodoEvent event, Emitter<TodoState> emit) async {
-    if (state is! TodoLoaded) return;
-    final current = state as TodoLoaded;
-
     final result = await deleteTodoUsecase(
       DeleteTodoParams(
         id: event.id,
       ),
     );
 
-    result.fold(
-      (failure) => emit(
+    await result.fold(
+      (failure) async => emit(
         TodoError(
           failure.message,
         ),
       ),
-      (_) => emit(
-        current.copyWith(
-            todos: current.todos.where((t) => t.id != event.id).toList()),
-      ),
+      (_) async {
+        final current = _loadedStateOrNull();
+
+        if (current == null) {
+          await _reloadTodos(emit);
+          return;
+        }
+
+        emit(
+          current.copyWith(
+              todos: current.todos.where((t) => t.id != event.id).toList()),
+        );
+      },
     );
   }
 
@@ -121,5 +139,18 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
       emit(current.copyWith(searchQuery: event.title));
     }
+  }
+
+  TodoLoaded? _loadedStateOrNull() {
+    final current = state;
+    return current is TodoLoaded ? current : null;
+  }
+
+  Future<void> _reloadTodos(Emitter<TodoState> emit) async {
+    final todos = await getTodosUsecase();
+    todos.fold(
+      (failure) => emit(TodoError(failure.message)),
+      (todos) => emit(TodoLoaded(todos)),
+    );
   }
 }

@@ -35,7 +35,12 @@ class _TodoPageState extends State<TodoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(),
-      floatingActionButton: _buildAddTodoButton(),
+      floatingActionButton: BlocBuilder<TodoBloc, TodoState>(
+        builder: (context, state) {
+          if (state is! TodoLoaded) return const SizedBox.shrink();
+          return _buildAddTodoButton();
+        },
+      ),
       body: BlocBuilder<TodoBloc, TodoState>(
         builder: (context, state) {
           if (state is TodoLoading) return _buildLoading();
