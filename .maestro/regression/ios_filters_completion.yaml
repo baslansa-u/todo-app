@@ -1,0 +1,12 @@
+appId: com.example.todoApp
+name: Regression - completion filters iOS
+---
+- runFlow: ../helpers/launch_ios.yaml
+- runFlow: ../helpers/add_read_release_notes.yaml
+- runFlow: ../helpers/complete_read_release_notes.yaml
+- tapOn: "Completed"
+- assertVisible: "Read release notes\nCheck QA scope"
+- tapOn: "Active"
+- assertVisible: "No todo"
+- tapOn: "All"
+- assertVisible: "Read release notes\nCheck QA scope"

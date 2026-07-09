@@ -1,0 +1,13 @@
+appId: ${APP_ID}
+# Edits the feature-edit fixture.
+---
+- tapOn: "Edit Old title"
+- assertVisible: "Edit Todo"
+- tapOn: "Old title"
+- eraseText: 100
+- inputText: "New title"
+- tapOn: "Old description"
+- eraseText: 100
+- inputText: "New description"
+- tapOn: "Save"
+- assertVisible: "New title\nNew description"

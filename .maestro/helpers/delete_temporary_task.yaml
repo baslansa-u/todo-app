@@ -1,0 +1,5 @@
+appId: ${APP_ID}
+# Deletes the feature-delete fixture and verifies the list is empty.
+---
+- tapOn: "Delete Temporary task"
+- assertVisible: "No todo"

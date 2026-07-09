@@ -1,0 +1,10 @@
+appId: ${APP_ID}
+# Creates the feature-create todo fixture.
+---
+- tapOn: "Add todo"
+- tapOn: "Title"
+- inputText: "Create feature task"
+- tapOn: "Description"
+- inputText: "Feature coverage"
+- tapOn: "Add"
+- assertVisible: "Create feature task\nFeature coverage"

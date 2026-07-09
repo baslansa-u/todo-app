@@ -1,0 +1,7 @@
+appId: com.example.todoApp
+name: Feature Todo - create iOS
+---
+- runFlow: ../../helpers/launch_ios.yaml
+- runFlow: ../../helpers/add_create_feature_task.yaml
+- assertVisible: "1\nTotal"
+- assertVisible: "1\nActive"

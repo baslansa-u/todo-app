@@ -1,0 +1,6 @@
+appId: ${APP_ID}
+# Marks the finalized lifecycle fixture completed.
+---
+- tapOn: "Toggle Finalize test plan completion"
+- assertVisible: "0\nActive"
+- assertVisible: "1\nDone"

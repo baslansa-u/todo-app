@@ -1,0 +1,6 @@
+appId: com.example.todo_app
+name: Feature Todo - edit
+---
+- runFlow: ../../helpers/launch_android.yaml
+- runFlow: ../../helpers/add_old_title.yaml
+- runFlow: ../../helpers/edit_old_to_new.yaml

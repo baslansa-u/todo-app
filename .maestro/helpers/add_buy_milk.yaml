@@ -1,0 +1,10 @@
+appId: ${APP_ID}
+# Creates the standard smoke-test todo fixture.
+---
+- tapOn: "Add todo"
+- tapOn: "Title"
+- inputText: "Buy milk"
+- tapOn: "Description"
+- inputText: "Created by Maestro"
+- tapOn: "Add"
+- assertVisible: "Buy milk\nCreated by Maestro"

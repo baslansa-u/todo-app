@@ -1,0 +1,7 @@
+appId: com.example.todo_app
+name: Feature Todo - create
+---
+- runFlow: ../../helpers/launch_android.yaml
+- runFlow: ../../helpers/add_create_feature_task.yaml
+- assertVisible: "1\nTotal"
+- assertVisible: "1\nActive"

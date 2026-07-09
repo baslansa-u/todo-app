@@ -1,0 +1,11 @@
+appId: com.example.todo_app
+name: Regression - search todos
+---
+- runFlow: ../helpers/launch_android.yaml
+- runFlow: ../helpers/add_buy_milk.yaml
+- runFlow: ../helpers/add_pay_rent.yaml
+- runFlow: ../helpers/search_pay_rent.yaml
+- assertNotVisible: "Buy milk\nCreated by Maestro"
+- runFlow: ../helpers/clear_search.yaml
+- assertVisible: "Buy milk\nCreated by Maestro"
+- assertVisible: "Pay rent\nMonthly payment"

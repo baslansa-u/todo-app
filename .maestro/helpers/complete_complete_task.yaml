@@ -1,0 +1,6 @@
+appId: ${APP_ID}
+# Marks the feature-complete fixture completed.
+---
+- tapOn: "Toggle Complete task completion"
+- assertVisible: "0\nActive"
+- assertVisible: "1\nDone"

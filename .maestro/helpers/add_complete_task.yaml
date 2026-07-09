@@ -1,0 +1,10 @@
+appId: ${APP_ID}
+# Creates the feature-complete todo fixture.
+---
+- tapOn: "Add todo"
+- tapOn: "Title"
+- inputText: "Complete task"
+- tapOn: "Description"
+- inputText: "Mark done"
+- tapOn: "Add"
+- assertVisible: "Complete task\nMark done"

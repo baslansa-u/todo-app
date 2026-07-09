@@ -60,6 +60,7 @@ class _TodoPageState extends State<TodoPage> {
       actions: [
         IconButton(
           onPressed: widget.onToggleTheme,
+          tooltip: "Toggle theme",
           icon: const Icon(Icons.dark_mode_outlined),
         ),
       ],
@@ -188,6 +189,7 @@ class _TodoPageState extends State<TodoPage> {
       height: 80,
       child: FloatingActionButton(
         onPressed: _showAddTodo,
+        tooltip: "Add todo",
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),

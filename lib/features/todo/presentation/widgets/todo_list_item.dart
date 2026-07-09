@@ -31,6 +31,7 @@ class TodoListItem extends StatelessWidget {
         leading: Checkbox(
           value: todo.isCompleted,
           onChanged: onChanged,
+          semanticLabel: "Toggle ${todo.title} completion",
         ),
         title: Text(
           todo.title,
@@ -59,10 +60,12 @@ class TodoListItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
+              tooltip: "Edit ${todo.title}",
               icon: const Icon(Icons.edit),
               onPressed: onEdit,
             ),
             IconButton(
+              tooltip: "Delete ${todo.title}",
               icon: const Icon(Icons.delete),
               onPressed: onDelete,
             ),

@@ -1,0 +1,10 @@
+appId: ${APP_ID}
+# Creates the lifecycle todo fixture.
+---
+- tapOn: "Add todo"
+- tapOn: "Title"
+- inputText: "Draft test plan"
+- tapOn: "Description"
+- inputText: "Cover critical paths"
+- tapOn: "Add"
+- assertVisible: "Draft test plan\nCover critical paths"

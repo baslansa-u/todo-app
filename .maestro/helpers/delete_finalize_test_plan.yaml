@@ -1,0 +1,5 @@
+appId: ${APP_ID}
+# Deletes the lifecycle fixture and verifies the list is empty.
+---
+- tapOn: "Delete Finalize test plan"
+- assertVisible: "No todo"

@@ -1,0 +1,11 @@
+appId: com.example.todo_app
+name: E2E - todo lifecycle
+---
+- runFlow: ../helpers/launch_android.yaml
+- runFlow: ../helpers/assert_empty_todo_list.yaml
+- runFlow: ../helpers/add_draft_test_plan.yaml
+- runFlow: ../helpers/edit_draft_to_final.yaml
+- runFlow: ../helpers/complete_finalize_test_plan.yaml
+- tapOn: "Completed"
+- assertVisible: "Finalize test plan\nReady for release"
+- runFlow: ../helpers/delete_finalize_test_plan.yaml

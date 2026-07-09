@@ -1,0 +1,6 @@
+appId: ${APP_ID}
+# Marks the release-notes fixture completed.
+---
+- tapOn: "Toggle Read release notes completion"
+- assertVisible: "0\nActive"
+- assertVisible: "1\nDone"

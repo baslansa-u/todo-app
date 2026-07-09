@@ -1,0 +1,4 @@
+appId: ${APP_ID}
+# Clears the active search field.
+---
+- tapOn: "Clear search"

@@ -1,0 +1,7 @@
+appId: ${APP_ID}
+# Verifies the app is loaded with no persisted todos.
+---
+- assertVisible: "0\nTotal"
+- assertVisible: "0\nActive"
+- assertVisible: "0\nDone"
+- assertVisible: "No todo"

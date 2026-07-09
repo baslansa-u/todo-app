@@ -1,0 +1,6 @@
+# Starts the iOS app from a clean simulator state.
+appId: com.example.todoApp
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Todo App"

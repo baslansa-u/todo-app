@@ -1,0 +1,10 @@
+appId: ${APP_ID}
+# Creates the feature-delete todo fixture.
+---
+- tapOn: "Add todo"
+- tapOn: "Title"
+- inputText: "Temporary task"
+- tapOn: "Description"
+- inputText: "Delete me"
+- tapOn: "Add"
+- assertVisible: "Temporary task\nDelete me"

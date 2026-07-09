@@ -1,0 +1,6 @@
+appId: com.example.todo_app
+name: Smoke - create todo
+---
+- runFlow: ../helpers/launch_android.yaml
+- runFlow: ../helpers/assert_empty_todo_list.yaml
+- runFlow: ../helpers/add_buy_milk.yaml

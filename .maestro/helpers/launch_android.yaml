@@ -1,0 +1,9 @@
+# Starts the Android app from a clean state and handles Android 16 KB page-size warning.
+appId: com.example.todo_app
+---
+- launchApp:
+    clearState: true
+- tapOn:
+    text: "Don't Show Again"
+    optional: true
+- assertVisible: "Todo App"

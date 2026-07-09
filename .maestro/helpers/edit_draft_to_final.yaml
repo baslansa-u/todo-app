@@ -1,0 +1,13 @@
+appId: ${APP_ID}
+# Edits the lifecycle fixture into its final release-ready copy.
+---
+- tapOn: "Edit Draft test plan"
+- assertVisible: "Edit Todo"
+- tapOn: "Draft test plan"
+- eraseText: 100
+- inputText: "Finalize test plan"
+- tapOn: "Cover critical paths"
+- eraseText: 100
+- inputText: "Ready for release"
+- tapOn: "Save"
+- assertVisible: "Finalize test plan\nReady for release"

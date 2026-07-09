@@ -1,0 +1,10 @@
+appId: ${APP_ID}
+# Creates the feature-edit todo fixture.
+---
+- tapOn: "Add todo"
+- tapOn: "Title"
+- inputText: "Old title"
+- tapOn: "Description"
+- inputText: "Old description"
+- tapOn: "Add"
+- assertVisible: "Old title\nOld description"

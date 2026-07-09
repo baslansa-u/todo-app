@@ -1,0 +1,10 @@
+appId: ${APP_ID}
+# Creates the completion/filter todo fixture.
+---
+- tapOn: "Add todo"
+- tapOn: "Title"
+- inputText: "Read release notes"
+- tapOn: "Description"
+- inputText: "Check QA scope"
+- tapOn: "Add"
+- assertVisible: "Read release notes\nCheck QA scope"

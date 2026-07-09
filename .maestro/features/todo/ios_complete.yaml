@@ -1,0 +1,6 @@
+appId: com.example.todoApp
+name: Feature Todo - complete iOS
+---
+- runFlow: ../../helpers/launch_ios.yaml
+- runFlow: ../../helpers/add_complete_task.yaml
+- runFlow: ../../helpers/complete_complete_task.yaml

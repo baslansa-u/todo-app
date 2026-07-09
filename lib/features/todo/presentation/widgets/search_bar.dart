@@ -56,6 +56,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           ),
           suffixIcon: hasText
               ? IconButton(
+                  tooltip: "Clear search",
                   icon: const Icon(
                     Icons.close,
                   ),

@@ -1,0 +1,6 @@
+appId: ${APP_ID}
+# Searches for the pay-rent fixture.
+---
+- tapOn: "Search task..."
+- inputText: "rent"
+- assertVisible: "Pay rent\nMonthly payment"

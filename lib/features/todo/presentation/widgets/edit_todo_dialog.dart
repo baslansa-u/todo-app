@@ -55,11 +55,13 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
         children: [
           TextField(
             controller: titleController,
+            onTap: () => _selectAll(titleController),
             decoration: const InputDecoration(labelText: "Title"),
           ),
           const SizedBox(height: 10),
           TextField(
             controller: descriptionController,
+            onTap: () => _selectAll(descriptionController),
             maxLines: 3,
             decoration: const InputDecoration(
               labelText: "Description",
@@ -98,6 +100,13 @@ class _EditTodoDialogState extends State<EditTodoDialog> {
           child: const Text("Save"),
         ),
       ],
+    );
+  }
+
+  void _selectAll(TextEditingController controller) {
+    controller.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: controller.text.length,
     );
   }
 }

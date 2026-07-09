@@ -1,0 +1,6 @@
+appId: com.example.todoApp
+name: Smoke - create todo iOS
+---
+- runFlow: ../helpers/launch_ios.yaml
+- runFlow: ../helpers/assert_empty_todo_list.yaml
+- runFlow: ../helpers/add_buy_milk.yaml

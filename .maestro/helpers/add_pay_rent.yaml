@@ -1,0 +1,10 @@
+appId: ${APP_ID}
+# Creates the search-target todo fixture.
+---
+- tapOn: "Add todo"
+- tapOn: "Title"
+- inputText: "Pay rent"
+- tapOn: "Description"
+- inputText: "Monthly payment"
+- tapOn: "Add"
+- assertVisible: "Pay rent\nMonthly payment"

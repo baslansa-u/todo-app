@@ -35,6 +35,7 @@ class DatePickerField extends StatelessWidget {
           ),
           suffixIcon: selectedDate != null
               ? IconButton(
+                  tooltip: "Clear due date",
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     onChanged(null);

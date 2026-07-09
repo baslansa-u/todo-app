@@ -1,0 +1,6 @@
+appId: com.example.todo_app
+name: Feature Todo - complete
+---
+- runFlow: ../../helpers/launch_android.yaml
+- runFlow: ../../helpers/add_complete_task.yaml
+- runFlow: ../../helpers/complete_complete_task.yaml
